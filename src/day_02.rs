@@ -44,6 +44,17 @@ fn part2(input: &str) -> u32 {
             Safety::Safe => safe_count += 1,
             Safety::Unsafe => {
                 let mut creport = report.clone();
+                creport.remove(0);
+                let safe_state: Safety;
+                (safe_state, _, _) = test_safety(&creport);
+                match safe_state {
+                    Safety::Safe => {
+                        safe_count += 1;
+                        continue 'outer;
+                    }
+                    Safety::Unsafe => {}
+                }
+                let mut creport = report.clone();
                 creport.remove(rm_id1);
                 let safe_state: Safety;
                 (safe_state, _, _) = test_safety(&creport);
