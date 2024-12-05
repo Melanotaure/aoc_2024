@@ -111,3 +111,49 @@ fn d_search(letters: &Vec<&[u8]>, x: usize, y: usize, d_x: isize, d_y: isize) ->
     }
     false
 }
+
+#[aoc(day4, part2)]
+fn part2(input: &str) -> u32 {
+    let lines = input.lines();
+    let mut letters = Vec::new();
+
+    for line in lines {
+        letters.push(line.as_bytes());
+    }
+
+    let mut count = 0;
+    for j in 1..(letters.len() - 1) {
+        let line = letters[j];
+        for i in 1..(line.len() - 1) {
+            if line[i] == b'A' {
+                count += if d_search_x(&letters, i, j) { 1 } else { 0 };
+            }
+        }
+    }
+
+    count
+}
+
+fn d_search_x(letters: &Vec<&[u8]>, x: usize, y: usize) -> bool {
+    if letters[y - 1][x - 1] == b'M' && letters[y + 1][x + 1] == b'S' {
+        if letters[y + 1][x - 1] == b'M' && letters[y - 1][x + 1] == b'S' {
+            return true;
+        }
+        if letters[y + 1][x - 1] == b'S' && letters[y - 1][x + 1] == b'M' {
+            return true;
+        }
+        return false;
+    }
+
+    if letters[y - 1][x - 1] == b'S' && letters[y + 1][x + 1] == b'M' {
+        if letters[y + 1][x - 1] == b'M' && letters[y - 1][x + 1] == b'S' {
+            return true;
+        }
+        if letters[y + 1][x - 1] == b'S' && letters[y - 1][x + 1] == b'M' {
+            return true;
+        }
+        return false;
+    }
+
+    false
+}
