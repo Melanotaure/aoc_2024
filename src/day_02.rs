@@ -31,9 +31,8 @@ fn part1(input: &str) -> u32 {
 fn part2(input: &str) -> u32 {
     let lines = input.lines();
     let mut safe_count: u32 = 0;
-    let mut count = 0;
 
-    'outer: for (i, line) in lines.into_iter().enumerate() {
+    'outer: for line in lines {
         let report: Vec<&str> = line.split_whitespace().collect();
         let safe_state: Safety;
         let rm_id1: usize;
@@ -78,9 +77,8 @@ fn part2(input: &str) -> u32 {
                 }
             }
         }
-        count = i;
     }
-    println!("{count}");
+
     safe_count
 }
 
